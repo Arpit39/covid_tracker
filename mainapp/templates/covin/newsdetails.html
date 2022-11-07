@@ -1,0 +1,14 @@
+{% extends 'covin/master.html' %}
+    {% block body %}
+    <div style="margin-left:5%; padding: auto;">
+    <h1>{{title}}</h1>
+    <h6>{{description}}</h6>
+    <h5 style="color:red">publish_on: {{publish_on}}</h5>
+    <h5 style="color:red ;">author :{{author}}</h5>
+    <img width="715" height="431" src="{{image}}">
+    {% for data in list_for_content%}
+    <p style="color:darkblue">{{data}}</p>
+    
+    {% endfor %}
+</div>
+    {% endblock %}

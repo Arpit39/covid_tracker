@@ -1,0 +1,192 @@
+{% extends 'covin/master.html' %}
+    {% block body %}
+    <h1 style="color: white; background-color: rgb(221, 93, 54); text-align: center;">COVIN DATA</h1>
+    <br>
+    <h2 style="margin-left: 30%; margin-right: 30%; background-color: green; color: white; text-align: center;">
+        {{city}}</h2>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <div class="card bg-info" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Confirmed</h5>
+                            <p class="card-text">{{Confirmed}}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-2">
+                    <div class="card text-right bg-danger" style="width: 18rem; color: white;">
+                        <div class="card-body">
+                            <h5 class="card-title">Deaths</h5>
+                            <p class="card-text">{{Deaths}}</p>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card text-right bg-primary" style="width: 18rem; color: white;">
+                        <div class="card-body">
+                            <h5 class="card-title">Date</h5>
+                            <p class="card-text">{{date}}</p>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card text-right bg-secondary" style="width: 18rem; color: white;">
+                        <div class="card-body">
+                            <h5 class="card-title">Recovered</h5>
+                            <p class="card-text">{{Recovered}}</p>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card text-right bg-success" style="width: 18rem; color: white;">
+                        <div class="card-body">
+                            <h5 class="card-title">Active</h5>
+                            <p class="card-text">{{Active}}</p>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+      <br>
+
+      <canvas id="myChart" width="200" height="50"></canvas>
+      <br>
+
+
+    <h1 style="color: white; background-color: rgb(54, 85, 221); text-align: center;">Province</h1>
+    <table id="example" class="table table-striped" style="width:100%;">
+        {% for coun in data.values %}
+        {% for key ,value in coun.items %}
+
+        <table id="example" class="table table-striped" style="width:100%">
+            <thead>
+                <th colspan="12" style="text-align: center; color: red;">city: {{key}}</th>
+                <tr>
+                    <th>Sr no</th>
+                    <th>active</th>
+                    <th>confirmed</th>
+                    <th>migratedother</th>
+                    <th>deceased</th>
+                    <th>recovered</th>
+                    <th colspan="3">delta</th>
+
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td rowspan="2">{{ forloop.counter}}</td>
+                    <td rowspan="2">{{value.active}}</td>
+                    <td rowspan="2">{{value.confirmed}}</td>
+                    <td rowspan="2">{{value.migratedother}}</td>
+                    <td rowspan="2">{{value.deceased}}</td>
+                    <td rowspan="2">{{value.recovered}}</td>
+                    <th>confirmed</th>
+                    <th>deceased</th>
+                    <th>recovered</th>
+                </tr>
+                <tr>
+                    <td>confirmed: {{value.delta.confirmed}}</td>
+                    <td>confirmed: {{value.delta.confirmed}}</td>
+                    <td>confirmed: {{value.delta.confirmed}}</td>
+                </tr>
+
+
+            </tbody>
+        </table>
+        <canvas id="myChart{{forloop.counter}}" width="200" height="50"></canvas>
+        <br>
+<script>
+    const ctx{{forloop.counter}} = document.getElementById('myChart{{forloop.counter}}').getContext('2d');
+    const myChart{{forloop.counter}} = new Chart(ctx{{forloop.counter}}, {
+        type: 'bar',
+        data: {
+            labels: ['active', 'confirmed', 'migratedother', 'deceased', 'recovered',],
+            datasets: [{
+                label: 'Coronavirus',
+                data: [{{value.active}},{{value.confirmed}},{{value.migratedother}},{{value.deceased}},{{value.recovered}}],
+    backgroundColor: [
+        'rgba(0, 230, 64,1)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+    ],
+        borderColor: [
+            'rgba(0, 230, 64,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+            borderWidth: 10
+            }]
+        },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                 
+                }
+        }
+    }
+    });
+</script>
+        {% endfor %}
+        {% endfor %}
+
+
+
+</body>
+<script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Confirmed', 'Deaths','Recovered' ,'Active',],
+            datasets: [{
+                label: 'Coronavirus',
+                data: [{{Confirmed}},{{Deaths}},{{Recovered}},{{Active}},"5"],
+                backgroundColor: [
+                    'rgba(0, 230, 64,1)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(0, 230, 64,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 10
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                 
+                }
+            }
+        }
+    });
+    </script>
+
+</html>
+{% endblock %}

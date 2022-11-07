@@ -1,0 +1,22 @@
+{% extends 'covin/master.html' %}
+{% block body %}
+<h2 style="margin-left: 30%; margin-right: 30%; background-color: green; color: white; text-align: center;">GLOBLE
+    NEWS</h2>
+<div class="container">
+    <div class="row" style="padding:auto;">
+        {% for i in newslist %}
+        
+        <div class="col-md-4" style="background-color:lemonchiffon; border:5px solid white;">
+            <img src="{{i.0}}" height="200px" class="d-block w-60" alt="...">
+            <a href="/newsdetails/?url={{i.3}}" style="text-decoration:none;">{{i.1}}</a>
+            
+            <p>{{i.2}}</p>
+        </div>
+        <br>
+        {% endfor %}
+    </div>
+
+
+
+
+    {% endblock %}

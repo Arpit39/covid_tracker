@@ -1,0 +1,150 @@
+{% extends 'covin/master.html' %}
+    {% block body %}
+    <h1 style="color: white; background-color: red; text-align: center;">COVIN DATA</h1>
+    <h2 style="margin-left: 30%; margin-right: 30%; background-color: green; color: white; text-align: center;">
+        {{country}}</h2>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <div class="card bg-info" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">New Confirmed</h5>
+                            <p class="card-text">{{NewConfirmed}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card text-right bg-black" style="width: 18rem; color: white;">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Confirmed</h5>
+                            <p class="card-text">{{TotalConfirmed}}</p>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card text-right bg-danger" style="width: 18rem; color: white;">
+                        <div class="card-body">
+                            <h5 class="card-title">New Deaths</h5>
+                            <p class="card-text">{{NewDeaths}}</p>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card text-right bg-primary" style="width: 18rem; color: white;">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Deaths</h5>
+                            <p class="card-text">{{TotalDeaths}}</p>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card text-right bg-secondary" style="width: 18rem; color: white;">
+                        <div class="card-body">
+                            <h5 class="card-title">New Recovered</h5>
+                            <p class="card-text">{{NewRecovered}}</p>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card text-right bg-success" style="width: 18rem; color: white;">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Recovered</h5>
+                            <p class="card-text">{{TotalRecovered}}</p>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+      <br>
+     
+      <canvas id="myChart" width="400" height="100"></canvas>
+      <br>
+
+
+
+    <table id="example" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Sr no</th>
+                <th>Province</th>
+                <th>Confirmed</th>
+               
+                <th>Deaths</th>
+                <th>Recovered</th>
+                <th>Active</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for coun in livecoun %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+
+                <td><a href="/city/{{coun.Province}}/{{coun.Country}}/{{coun.Date}}" >{{coun.Province}}</a></td>
+                <td>{{coun.Confirmed}}</td>
+                <td>{{coun.Deaths}}</td>
+                <td>{{coun.Recovered}}</td>
+                <td>{{coun.Active}}</td>
+                <td>{{coun.Date}}</td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+
+    </script>
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['New Confirmed', 'Total Confirmed', 'New Deaths','Total Deaths' ,'New Recovered', 'Total Recovered',],
+                datasets: [{
+                    label: 'Coronavirus',
+                    data: [{{NewConfirmed}},{{TotalConfirmed}},{{NewDeaths}},{{TotalDeaths}},{{NewRecovered}},{{TotalRecovered}},],
+                    backgroundColor: [
+                        'rgba(0, 230, 64,1)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 230, 64,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 10
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                     
+                    }
+                }
+            }
+        });
+        </script>
+</body>
+
+</html>
+{% endblock %}
